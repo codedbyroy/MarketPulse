@@ -1,0 +1,39 @@
+services:
+  # 1. FastAPI Persistent Web Service
+  - type: web
+    name: marketpulse-api
+    runtime: python
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt && alembic upgrade head
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: marketpulse-db
+          property: connectionString
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DEFAULT_ADMIN_EMAIL
+        value: admin@marketpulse.in
+      - key: DEFAULT_ADMIN_PASSWORD
+        generateValue: true
+
+  # 2. Independent Persistent Monitoring Worker
+  - type: worker
+    name: marketpulse-worker
+    runtime: python
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: python -m app.scheduler
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: marketpulse-db
+          property: connectionString
+
+databases:
+  # 3. Production Managed PostgreSQL Database
+  - name: marketpulse-db
+    databaseName: marketpulse
+    user: marketpulse_user
+    plan: free
