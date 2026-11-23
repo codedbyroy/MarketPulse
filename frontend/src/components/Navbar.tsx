@@ -55,6 +55,7 @@ export default function Navbar() {
 
   const navLinks = [
     { label: "Overview", href: "/" },
+    { label: "Bento Analytics", href: "/bento" },
     { label: "Public Status", href: "/status" },
     { label: "Incidents", href: "/incidents" },
     { label: "Admin Portal", href: "/admin" },

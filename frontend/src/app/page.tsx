@@ -16,6 +16,11 @@ import {
   Search
 } from "lucide-react";
 import { apiFetch, OverviewStatus, ServiceItem } from "@/lib/api";
+import {
+  BrutalistBarChart,
+  BrutalistRadarChart,
+  BrutalistDonut,
+} from "@/components/ui/bento-dashboard";
 
 export default function OverviewDashboard() {
   const [data, setData] = useState<OverviewStatus | null>(null);
@@ -314,7 +319,38 @@ export default function OverviewDashboard() {
         </div>
       </div>
 
-      {/* 4. Category Tabs & Search Bar */}
+      {/* 4. Bento System Analytics & Telemetry */}
+      <section className="space-y-4 pt-2">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-market-border pb-3">
+          <div className="flex items-center gap-2.5">
+            <div className="w-2.5 h-2.5 rounded-full bg-cyan-400 animate-pulse" />
+            <h3 className="text-base font-bold text-white tracking-tight">
+              Bento Telemetry &amp; System Health Analytics
+            </h3>
+          </div>
+          <span className="text-xs text-slate-400 font-mono">
+            Weekly Request Volume • 5-Axis Radar • Core-8 Resource Allocation
+          </span>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="flex flex-col gap-6">
+            <div className="w-full min-h-[380px]">
+              <BrutalistBarChart />
+            </div>
+            <div className="w-full min-h-[380px]">
+              <BrutalistRadarChart />
+            </div>
+          </div>
+          <div className="h-full min-h-[480px] lg:h-auto flex">
+            <div className="w-full h-full">
+              <BrutalistDonut />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 5. Category Tabs & Search Bar */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-market-border pb-4">
         {/* Category Filter Pills */}
         <div className="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0">
